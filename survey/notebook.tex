@@ -1,0 +1,959 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{analysis}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{glob}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{pandas\PYZus{}profiling}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sample.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}       sexo rango\_edad zona\_residencia vereda\_barrio  \textbackslash{}
+        0   Hombre      18-25          Urbano     Consolata   
+        1    Mujer      26-35          Urbano  San Fernando   
+        2   Hombre      46-55          Urbano  San Fernando   
+        3   Hombre      26-35          Urbano   Santa Lucia   
+        4    Mujer        65+          Urbano        Centro   
+        5    Mujer      36-45          Urbano       Danubio   
+        6    Mujer      26-35           Rural           NaN   
+        7   Hombre      36-45          Urbano   Santa Lucia   
+        8   Hombre      26-35          Urbano    San Isidro   
+        9   Hombre      36-45          Urbano   San Jacinto   
+        10   Mujer      36-45          Urbano   San Jacinto   
+        11   Mujer        65+          Urbano        Centro   
+        12   Mujer      36-45          Urbano   San Jacinto   
+        13   Mujer        NaN          Urbano       Carmelo   
+        14  Hombre      56-65          Urbano           NaN   
+        15  Hombre      18-25          Urbano           NaN   
+        16  Hombre      36-45          Urbano      Progreso   
+        17   Mujer      36-45          Urbano      Progreso   
+        18     NaN      36-45          Urbano   San Jacinto   
+        19   Mujer      36-45          Urbano   San Jacinto   
+        20   Mujer      18-25          Urbano       Carmelo   
+        21  Hombre      36-45           Rural        Soleto   
+        22   Mujer      26-35          Urbano   San Jacinto   
+        23   Mujer      46-55          Urbano   San Jacinto   
+        24  Hombre      36-45          Urbano     Consolata   
+        25  Hombre      36-45          Urbano       Danubio   
+        26   Mujer      36-45          Urbano   Los Samanes   
+        27   Mujer      26-35          Urbano       Carmelo   
+        28   Mujer      36-45          Urbano    San Isidro   
+        29  Hombre        NaN          Urbano           NaN   
+        30   Mujer      36-45           Rural        Soleto   
+        31   Mujer      46-55          Urbano        Centro   
+        32   Mujer      56-65          Urbano        Centro   
+        33  Hombre      36-45          Urbano   San Jacinto   
+        34  Hombre        NaN          Urbano   San Jacinto   
+        35   Mujer      26-35          Urbano       Carmelo   
+        36   Mujer      26-35          Urbano       Danubio   
+        37  Hombre      46-55          Urbano   San Jacinto   
+        38  Hombre      46-55           Rural    Santa Rosa   
+        39  Hombre        65+           Rural           NaN   
+        40   Mujer      56-65          Urbano    San Isidro   
+        41   Mujer        65+             NaN           NaN   
+        42   Mujer        65+          Urbano       Carmelo   
+        43     NaN      46-55          Urbano       Carmelo   
+        44   Mujer        65+           Rural           NaN   
+        45   Mujer      36-45          Urbano     REVISAR *   
+        
+                  actividad\_economica maximo\_grado\_escolaridad  \textbackslash{}
+        0               Independiente                 Primaria   
+        1                    Empleado            Universitario   
+        2                    Empleado                Tecnologo   
+        3   Independiente (Ingeniero)                 Posgrado   
+        4                       Hogar            Universitario   
+        5                    Empleado                  Tecnico   
+        6                    Empleado            Universitario   
+        7                 Comerciante               Secundaria   
+        8       Empleado, Comerciante                  Tecnico   
+        9                     Maestro                  Tecnico   
+        10                      Hogar               Secundaria   
+        11                      Hogar                 Primaria   
+        12                        NaN                 Primaria   
+        13                      Hogar                 Primaria   
+        14                   Empleado               Secundaria   
+        15                        NaN               Secundaria   
+        16                        NaN                 Primaria   
+        17                      Hogar                 Primaria   
+        18                        NaN               Secundaria   
+        19                      Hogar                 Primaria   
+        20                      Hogar               Secundaria   
+        21      Mantenimiento general                 Primaria   
+        22                      Hogar                 Primaria   
+        23                      Hogar                 Primaria   
+        24                 Arquitecto            Universitario   
+        25                        NaN               Secundaria   
+        26     Auxiliar de enfermeria                Tecnologo   
+        27                   Empleado               Secundaria   
+        28                   Empleado               Secundaria   
+        29                        NaN            Universitario   
+        30                      Hogar                 Primaria   
+        31                Comerciante               Secundaria   
+        32                      Hogar                 Primaria   
+        33                   Empleado            Universitario   
+        34                        NaN                 Primaria   
+        35      Empleado, Comerciante                  Tecnico   
+        36                   Empleado                  Tecnico   
+        37                Desempleado                  Tecnico   
+        38         Productor Agricola            Universitario   
+        39                        NaN                 Primaria   
+        40                      Hogar                 Primaria   
+        41                        NaN                 Primaria   
+        42                      Hogar                 Primaria   
+        43              Independiente                 Primaria   
+        44                        NaN                 Primaria   
+        45                   Empleado                  Tecnico   
+        
+                                             problema\_tocaima color\_favorito  \textbackslash{}
+        0                                         Inseguridad           rojo   
+        1                                     Falta de empleo           azul   
+        2                                               Todas          verde   
+        3            Tecnificacion del campo, Falta de empleo         blanco   
+        4                                     Falta de empleo          verde   
+        5   Inseguridad, Falta de empleo, Calidad en la ed{\ldots}           azul   
+        6                                               Todas         rosado   
+        7                                         inseguridad         blanco   
+        8                                     Falta de empleo           azul   
+        9                        Inseguridad, Falta de empleo           rojo   
+        10                                        Inseguridad           azul   
+        11                                    Falta de empleo         rosado   
+        12                                    Falta de empleo         rosado   
+        13                       Falta de empleo, Inseguridad         fucsia   
+        14                                    Falta de empleo         blanco   
+        15                            Calidad de la educacion           azul   
+        16                                    Falta de empleo       amarillo   
+        17                                    Falta de empleo           rojo   
+        18                                        Inseguridad          negro   
+        19                                    Falta de empleo         blanco   
+        20                                    Falta de empleo          verde   
+        21                                        Inseguridad           rojo   
+        22                                    Falta de empleo         blanco   
+        23                                    Falta de empleo       amarillo   
+        24                                    Falta de empleo       amarillo   
+        25                                        Inseguridad           azul   
+        26                                    Falta de empleo           rojo   
+        27                                    Falta de empleo          verde   
+        28                                    Falta de empleo          negro   
+        29                           Tecnificacion del campo             NaN   
+        30                           Tecnificacion del campo           negro   
+        31                                    Falta de empleo           azul   
+        32                                                NaN         blanco   
+        33                                    Falta de empleo          verde   
+        34           Falta de empleo, Calidad de la educacion         blanco   
+        35                                    Falta de empleo          verde   
+        36                                              Todas         blanco   
+        37                                           REVISAR*       amarillo   
+        38                           Tecnificacion del campo            azul   
+        39                                    Falta de empleo            NaN   
+        40                                        Inseguridad           azul   
+        41                                    Falta de empleo            NaN   
+        42                       Inseguridad, Falta de empleo           azul   
+        43                       Inseguridad, Falta de empleo            NaN   
+        44                                    Falta de empleo          negro   
+        45                                                NaN          negro   
+        
+                       color\_relacion  \textbackslash{}
+        0                         NaN   
+        1                  Honestidad   
+        2                   Esperanza   
+        3   Honestidad, Transparencia   
+        4                   Esperanza   
+        5                      Pureza   
+        6                     Respeto   
+        7                         Paz   
+        8                        Vida   
+        9                         NaN   
+        10                  Fortaleza   
+        11                    Alegria   
+        12           Fuerza, Valentia   
+        13                    Alegria   
+        14                        Paz   
+        15                 Honestidad   
+        16                   Libertad   
+        17                       Vida   
+        18                        NaN   
+        19                        Paz   
+        20                Prosperidad   
+        21                 Color vivo   
+        22                        Paz   
+        23                  Esperanza   
+        24                 Amabilidad   
+        25                         10   
+        26             Fuerza, Empuje   
+        27                        NaN   
+        28            porque me gusta   
+        29                        NaN   
+        30                        NaN   
+        31                        NaN   
+        32      Un color transparente   
+        33                    Lealtad   
+        34                        NaN   
+        35                  Fortaleza   
+        36                        Paz   
+        37                        NaN   
+        38                  Horizonte   
+        39                        NaN   
+        40     Con el color del cielo   
+        41                        NaN   
+        42                     El mar   
+        43                        NaN   
+        44               Tranquilidad   
+        45                   Igualdad   
+        
+                                                 descripcion  \textbackslash{}
+        0                                          Alcaldesa   
+        1                                       Emprendedora   
+        2                                              Mujer   
+        3                                     Berraca, lider   
+        4                                                NaN   
+        5                                  Sencilla, Humilde   
+        6                                          Esperanza   
+        7                                         Honestidad   
+        8                                 Mujer emprendedora   
+        9                               Una mujer con futuro   
+        10                               Una mujer de exitos   
+        11                                           Paisana   
+        12                                        Sinceridad   
+        13                                           Los dos   
+        14                                Tocaimuna, Honesta   
+        15  Que ella es del pueblo y sabe lo que necesitamos   
+        16                        Fuerza a luchar y triunfar   
+        17                                         Vencedora   
+        18                                   La personalidad   
+        19                                      Su sencillez   
+        20                                        Honestidad   
+        21                                  Honesta, Familia   
+        22                                         Sencillez   
+        23                                          Humildad   
+        24                                          Sensible   
+        25                              Una mujer prendedora   
+        26                                     Transparencia   
+        27                            Una mujer emprendedora   
+        28                                        Su nobleza   
+        29                                      Emprendedora   
+        30                                             Lider   
+        31                                          Estefany   
+        32                                           Stefany   
+        33                                         Esperanza   
+        34                                               NaN   
+        35                                        Sinceridad   
+        36                                          Humildad   
+        37                                           Lealtad   
+        38                                        Admiracion   
+        39                                               NaN   
+        40                                               NaN   
+        41                                               NaN   
+        42                                      Inteligencia   
+        43                                               NaN   
+        44                                         Sencillez   
+        45                                    Empoderamiento   
+        
+                                       fortaleza  \textbackslash{}
+        0                                    NaN   
+        1                          Perseverancia   
+        2                             Su familia   
+        3                         Union familiar   
+        4                                Honesta   
+        5   El empuje de querer ayudar al pueblo   
+        6                          Perseverancia   
+        7                                    NaN   
+        8                             El deporte   
+        9                      Ser mujer exitosa   
+        10     Ser una mujer de ejemplo a seguir   
+        11                               Berraca   
+        12                           La humildad   
+        13     Que no le da pena decir las cosas   
+        14                        Ser de Tocaima   
+        15                                   NaN   
+        16                             Luchadora   
+        17                              Voluntad   
+        18                            Como habla   
+        19                         Ser Tocaimuna   
+        20                         Ser Tocaimuna   
+        21                            Berraquera   
+        22                           Muy humilde   
+        23               Ser una mujer tocaimuna   
+        24                          La seguridad   
+        25      Creer en ella misma y fe en Dios   
+        26                            Constancia   
+        27              Sacar su ciudad adelante   
+        28              Sacar su pueblo adelante   
+        29         Su juventud y sus capacidades   
+        30                                   NaN   
+        31                   Se expreso muy bien   
+        32                        Tener caracter   
+        33                                 Valor   
+        34                                   NaN   
+        35                    Mujer emprendedora   
+        36                          Su seguridad   
+        37                                   NaN   
+        38                              Juventud   
+        39                                   NaN   
+        40                                   NaN   
+        41                                   NaN   
+        42                               Berraca   
+        43                                   NaN   
+        44                                   NaN   
+        45                    Amor por su pueblo   
+        
+                                                    debilidad  \textbackslash{}
+        0                                           no conoce   
+        1             Falta de reconocimiento en el municipio   
+        2                                  Inocencia politica   
+        3                                     La politiqueria   
+        4                                                 NaN   
+        5   Por el momento no se nota la debilidad porque {\ldots}   
+        6                                         Experiencia   
+        7                                                 NaN   
+        8                                                 NaN   
+        9                      Venir mas seguido al municipio   
+        10               Estar mas seguido en la ciudad salud   
+        11                               Cumplan adulto mayor   
+        12                                          Seguridad   
+        13                    Que no se le cumplan sus sue�os   
+        14                                       Ser sensible   
+        15                                                NaN   
+        16                                            Ninguna   
+        17                                            Ninguna   
+        18                                            Ninguna   
+        19                                   Ser muy sensible   
+        20                                       Muy sensible   
+        21                                                NaN   
+        22                                        La humildad   
+        23                                           Sensible   
+        24                                     La popularidad   
+        25                                                NaN   
+        26                                            Ninguna   
+        27                                                NaN   
+        28                     Pues la verdad no he escuchado   
+        29                        Su corto recorrido politico   
+        30                  No conocemos los otros candidatos   
+        31                    Es una mujer con muchos valores   
+        32              Que es una mujer con muchos proyectos   
+        33                                        Experiencia   
+        34                                                NaN   
+        35                                                NaN   
+        36                                            Ninguna   
+        37                                 Casi no la conocen   
+        38                                                NaN   
+        39                                                NaN   
+        40                                                NaN   
+        41                                                NaN   
+        42                              Ayudar a las personas   
+        43                                                NaN   
+        44                                            Ninguna   
+        45                                      No la conocen   
+        
+                                              recomendaciones  \textbackslash{}
+        0                                           seguridad   
+        1        Colocar todos los proyectos en manos de Dios   
+        2                                             Oracion   
+        3   Trabajar dia a dia sin desfallecer por su obje{\ldots}   
+        4                         Mucha inteligencia, trabajo   
+        5                          Mejorar la calidad de vida   
+        6                Que se de a conocer mas en el pueblo   
+        7                                                 NaN   
+        8   Luchar contra todo obstaculo ya que lo que se {\ldots}   
+        9                    Dios la bendiga en sus proyectos   
+        10                                       La seguridad   
+        11                                                NaN   
+        12                            La seguridad del pueblo   
+        13  Que le den trabajo a los de Tocaima y los de o{\ldots}   
+        14                           Ser mas directa y fuerte   
+        15                         Que invierta en la cultura   
+        16                                                NaN   
+        17                                                NaN   
+        18      Tener en cuenta las personas con discapacidad   
+        19                                     Ser mas fuerte   
+        20                                     Ser mas fuerte   
+        21                                          Seguridad   
+        22                                                NaN   
+        23                                         Mas empleo   
+        24                                Darse a conocer mas   
+        25                          Que sea una mujer honesta   
+        26                           Seguir siendo ella misma   
+        27                                                NaN   
+        28                                                NaN   
+        29  Recorrer el municipio y conocer su gente y sus{\ldots}   
+        30          Que siga interactuando con los campesinos   
+        31           Que tengan muchos cambios para el pueblo   
+        32  Que con el apoyo de cada uno de nosotros sea m{\ldots}   
+        33                                Darse a conocer mas   
+        34                            Que sea buena alcaldesa   
+        35                         Mejorar la calidad de vida   
+        36  Creo que es una mujer completa en todo el sent{\ldots}   
+        37                                                NaN   
+        38          Campa�a con miras a combatir a los mismos   
+        39                                                NaN   
+        40                                                NaN   
+        41                                                NaN   
+        42                                       Que siga asi   
+        43                                                NaN   
+        44                                            Ninguna   
+        45                              Trabajar, casa a casa   
+        
+                                                precandidatos  \textbackslash{}
+        0                                         Julian Mora   
+        1                                                  No   
+        2                                                 NaN   
+        3    Robinson: prepotente, Julian: Falta de liderazgo   
+        4                                                 NaN   
+        5   Robinson: preopotente, crecido, Stephany: Es u{\ldots}   
+        6                                                  No   
+        7                                                  No   
+        8          Robinson Mora, Fabian Mora, Hernan Herrera   
+        9                                                 NaN   
+        10                                                NaN   
+        11                                                NaN   
+        12                                                 No   
+        13      Toca escuchar la opinion de cada uno de ellos   
+        14                                                NaN   
+        15                                                NaN   
+        16                                                NaN   
+        17                                                NaN   
+        18                                                 No   
+        19                                                NaN   
+        20                                                NaN   
+        21                                                NaN   
+        22                                                 No   
+        23                                                 No   
+        24  Julian Mora, Robinson Mora, Hernan Herrera, Fe{\ldots}   
+        25                                     Robinson Mora    
+        26                                                 No   
+        27                                                NaN   
+        28                                                 No   
+        29                                                NaN   
+        30                                                 No   
+        31                                                NaN   
+        32                                                NaN   
+        33                                                 No   
+        34                                                NaN   
+        35         Julian Mora, Robinson Mora, Hernan Herrera   
+        36  Si, no tengo conocimiento aun de sus propuesta{\ldots}   
+        37                                                NaN   
+        38                 Conozco 3 pero ninguno me convence   
+        39                                                NaN   
+        40                                                NaN   
+        41                                                NaN   
+        42                                        Mas o menos   
+        43                                                NaN   
+        44                            Robinson Mora: Sencillo   
+        45                         Julian Mora, Robinson Mora   
+        
+                                        vota  
+        0                   Stephany Murillo  
+        1                   Stephany Murillo  
+        2                             Blanco  
+        3                   Stephany Murillo  
+        4                   Stephany Murillo  
+        5    Stephany Murillo, Robinson Mora  
+        6                   Stephany Murillo  
+        7                   Stephany Murillo  
+        8                   Stephany Murillo  
+        9                   Stephany Murillo  
+        10                  Stephany Murillo  
+        11                  Stephany Murillo  
+        12                  Stephany Murillo  
+        13                            Blanco  
+        14                  Stephany Murillo  
+        15                  Stephany Murillo  
+        16                  Stephany Murillo  
+        17                  Stephany Murillo  
+        18                  Stephany Murillo  
+        19                  Stephany Murillo  
+        20                  Stephany Murillo  
+        21     Stephany Murillo, Julian Mora  
+        22                  Stephany Murillo  
+        23                  Stephany Murillo  
+        24                  Stephany Murillo  
+        25                  Stephany Murillo  
+        26                  Stephany Murillo  
+        27                  Stephany Murillo  
+        28                  Stephany Murillo  
+        29                  Stephany Murillo  
+        30                  Stephany Murillo  
+        31                  Stephany Murillo  
+        32                  Stephany Murillo  
+        33                  Stephany Murillo  
+        34                  Stephany Murillo  
+        35                  Stephany Murillo  
+        36                  Stephany Murillo  
+        37  Stephany Murillo, Hernan Herrera  
+        38                  Stephany Murillo  
+        39                  Stephany Murillo  
+        40                  Stephany Murillo  
+        41                               NaN  
+        42                  Stephany Murillo  
+        43                               NaN  
+        44                  Stephany Murillo  
+        45                  Stephany Murillo  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sexo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} Mujer     26
+        Hombre    18
+        Name: sexo, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rango\PYZus{}edad}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} 36-45    17
+        26-35     8
+        46-55     6
+        65+       6
+        18-25     3
+        56-65     3
+        Name: rango\_edad, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zona\PYZus{}residencia}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} Urbano    39
+        Rural      6
+        Name: zona\_residencia, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{vereda\PYZus{}barrio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} San Jacinto     10
+        Carmelo          6
+        Centro           4
+        San Isidro       3
+        Danubio          3
+        Santa Lucia      2
+        Soleto           2
+        San Fernando     2
+        Progreso         2
+        Consolata        2
+        REVISAR *        1
+        Los Samanes      1
+        Santa Rosa       1
+        Name: vereda\_barrio, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actividad\PYZus{}economica}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} Hogar                        13
+        Empleado                     10
+        Empleado, Comerciante         2
+        Comerciante                   2
+        Independiente                 2
+        Mantenimiento general         1
+        Maestro                       1
+        Arquitecto                    1
+        Productor Agricola            1
+        Independiente (Ingeniero)     1
+        Auxiliar de enfermeria        1
+        Desempleado                   1
+        Name: actividad\_economica, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{maximo\PYZus{}grado\PYZus{}escolaridad}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} Primaria         19
+         Secundaria       10
+         Tecnico           7
+         Universitario     7
+         Tecnologo         2
+         Posgrado          1
+         Name: maximo\_grado\_escolaridad, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{problema\PYZus{}tocaima}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} Falta de empleo                                          22
+         Inseguridad                                               6
+         Tecnificacion del campo                                   3
+         Inseguridad, Falta de empleo                              3
+         Todas                                                     3
+         Falta de empleo, Calidad de la educacion                  1
+         Tecnificacion del campo, Falta de empleo                  1
+         inseguridad                                               1
+         Inseguridad, Falta de empleo, Calidad en la educacion     1
+         Calidad de la educacion                                   1
+         Falta de empleo, Inseguridad                              1
+         REVISAR*                                                  1
+         Name: problema\_tocaima, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{color\PYZus{}favorito}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} azul        10
+         blanco       8
+         verde        6
+         rojo         5
+         negro        5
+         amarillo     4
+         rosado       3
+         fucsia       1
+         Name: color\_favorito, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{precandidatos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} No                                                                                                11
+         Julian Mora                                                                                        1
+         Robinson Mora: Sencillo                                                                            1
+         Robinson: preopotente, crecido, Stephany: Es una mujer que nos va a representar bien el pueblo     1
+         Robinson: prepotente, Julian: Falta de liderazgo                                                   1
+         Julian Mora, Robinson Mora, Hernan Herrera                                                         1
+         Si, no tengo conocimiento aun de sus propuestas de trabajo                                         1
+         Conozco 3 pero ninguno me convence                                                                 1
+         Robinson Mora, Fabian Mora, Hernan Herrera                                                         1
+         Julian Mora, Robinson Mora, Hernan Herrera, Fernando Afanador                                      1
+         Mas o menos                                                                                        1
+         Julian Mora, Robinson Mora                                                                         1
+         Robinson Mora                                                                                      1
+         Toca escuchar la opinion de cada uno de ellos                                                      1
+         Name: precandidatos, dtype: int64
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{vota}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} Stephany Murillo                    39
+         Blanco                               2
+         Stephany Murillo, Robinson Mora      1
+         Stephany Murillo, Julian Mora        1
+         Stephany Murillo, Hernan Herrera     1
+         Name: vota, dtype: int64
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
